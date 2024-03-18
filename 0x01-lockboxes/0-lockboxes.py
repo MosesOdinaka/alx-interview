@@ -1,34 +1,38 @@
 #!/usr/bin/python3
 """
-This function checks if all boxes can be opened.
+Module to determine if all boxes can be opened.
 """
 
-def canUnlockAll(boxList):
+def canUnlockAll(box_list):
     """
-    This function checks if all boxes in the list can be opened.
-    :param boxList: List of boxes
-    :return: Boolean value indicating if all boxes can be opened
+    Function to check if all boxes in the list can be opened.
+    
+    Parameters:
+    box_list (list): List of boxes
+    
+    Returns:
+    bool: True if all boxes can be opened, False otherwise
     """
 
-    # Check if boxList is a list
-    if not isinstance(boxList, list):
+    # Check if box_list is a list
+    if not isinstance(box_list, list):
         return False
 
-    # Check if boxList is empty
-    if not boxList:
+    # Check if box_list is empty
+    if not box_list:
         return False
 
     # Initialize list of keys with the first box key
-    availableKeys = [0]
+    available_keys = [0]
 
     # Iterate over the available keys
-    for keyIndex in availableKeys:
+    for key_index in available_keys:
         # Iterate over keys in the current box
-        for key in boxList[keyIndex]:
+        for key in box_list[key_index]:
             # Check conditions before adding the key
-            if (key not in availableKeys and key != keyIndex and 
-                key < len(boxList) and key != 0):
-                availableKeys.append(key)
+            if (key not in available_keys and key != key_index and 
+                key < len(box_list) and key != 0):
+                available_keys.append(key)
 
     # Check if all boxes can be opened
-    return len(availableKeys) == len(boxList)
+    return len(available_keys) == len(box_list)
