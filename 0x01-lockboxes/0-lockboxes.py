@@ -3,13 +3,14 @@
 Module to determine if all boxes can be opened.
 """
 
+
 def canUnlockAll(box_list):
     """
     Function to check if all boxes in the list can be opened.
-    
+
     Parameters:
     box_list (list): List of boxes
-    
+
     Returns:
     bool: True if all boxes can be opened, False otherwise
     """
@@ -30,8 +31,8 @@ def canUnlockAll(box_list):
         # Iterate over keys in the current box
         for key in box_list[key_index]:
             # Check conditions before adding the key
-            if (key not in available_keys and key != key_index and 
-                key < len(box_list) and key != 0):
+            if (key not in available_keys and key != key_index and
+               key < len(box_list) and key != 0):
                 available_keys.append(key)
 
     # Check if all boxes can be opened
