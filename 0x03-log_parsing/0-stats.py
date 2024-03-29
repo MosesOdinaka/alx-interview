@@ -1,42 +1,44 @@
+#!/usr/bin/python3
+"""script that reads stdin line by line and computes metrics"""
+
 import sys
-import signal
-
-# Initialize counters
-statusCodes = {str(1): 0 for i in [200, 301, 400, 401, 403, 404, 405, 500]}
-totalSize = 0
-lineCount = 0
 
 
-def printStats(signal=None, frame=None):
-    print("File size: {}".format(totalSize))
-    for code in sorted(statusCodes.key()):
-        if statusCodes[code] > 0:
-            print("{}: {}".format(code, statusCodes[code]))
-
-
-# Handle CTRL+C
-signal.signal(signal.SIGINT, printStats)
+i = 0
+sum_file_size = 0
+status_code = {'200': 0,
+               '301': 0,
+               '400': 0,
+               '401': 0,
+               '403': 0,
+               '404': 0,
+               '405': 0,
+               '500': 0}
 
 try:
     for line in sys.stdin:
-        try:
-            seperates = line.split(" ")
-            size = int(seperates[-1])
-            code = seperates[-2]
-
-            if code in statusCodes:
-                statusCodes[code] += 1
-                totalSize += size
-
-            lineCount += 1
-            if lineCount % 10 == 0:
-                printStats()
-
-        except ValueError:
-            continue
-
-except KeyboardInterrupt:
+        args = line.split(' ')
+        if len(args) > 2:
+            status_line = args[-2]
+            file_size = args[-1]
+            if status_line in status_code:
+                status_code[status_line] += 1
+            sum_file_size += int(file_size)
+            i += 1
+            if i == 10:
+                print('File size: {:d}'.format(sum_file_size))
+                sorted_keys = sorted(status_code.keys())
+                for key in sorted_keys:
+                    value = status_code[key]
+                    if value != 0:
+                        print('{}: {}'.format(key, value))
+                i = 0
+except Exception:
     pass
-
 finally:
-    printStats()
+    print('File size: {:d}'.format(sum_file_size))
+    sorted_keys = sorted(status_code.keys())
+    for key in sorted_keys:
+        value = status_code[key]
+        if value != 0:
+            print('{}: {}'.format(key, value))
