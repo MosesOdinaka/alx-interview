@@ -3,8 +3,8 @@
 N-Queens Solver
 
 Description:
-The N-Queens puzzle is the challenge of placing N non-attacking queens on an N×N chessboard.
-This program solves the N-Queens problem.
+Solves the N-Queens puzzle by placing N non-attacking queens on an N×N
+chessboard.
 
 Usage:
 nqueens N
@@ -13,17 +13,21 @@ Arguments:
 N: An integer greater than or equal to 4 (size of the chessboard).
 
 Behavior:
-- If the user provides the wrong number of arguments, it prints "Usage: nqueens N" and exits with status 1.
-- If N is not an integer, it prints "N must be a number" and exits with status 1.
-- If N is smaller than 4, it prints "N must be at least 4" and exits with status 1.
-- The program prints every possible solution to the problem, one solution per line.
-- Solutions are not required to be printed in a specific order.
+- If the user provides the wrong number of arguments, it prints "Usage: nqueens
+N" and exits with status 1.
+- If N is not an integer, it prints "N must be a number" and exits with
+status 1.
+- If N is smaller than 4, it prints "N must be at least 4" and exits with
+status 1.
+- Prints every possible solution to the problem, one solution per line
+(order not specified).
 
 Constraints:
 - Only the sys module is allowed for import.
 """
 
 import sys
+
 
 def print_solution(board):
     """
@@ -35,6 +39,7 @@ def print_solution(board):
     for row, col in enumerate(board):
         solution.append([row, col.index(1)])
     print(solution)
+
 
 def is_safe(board, row, col, N):
     """
@@ -55,6 +60,7 @@ def is_safe(board, row, col, N):
         if row + i < N and board[row + i][col - i] == 1:
             return False
     return True
+
 
 def solve_NQueens_util(board, col, N):
     """
@@ -77,6 +83,7 @@ def solve_NQueens_util(board, col, N):
             board[i][col] = 0  # Backtrack
     return res
 
+
 def solve_NQueens(N):
     """
     Solves the N-Queens problem and prints all solutions.
@@ -89,6 +96,7 @@ def solve_NQueens(N):
     if not solve_NQueens_util(board, 0, N):
         return False
     return True
+
 
 def validate_input(args):
     """
@@ -110,6 +118,7 @@ def validate_input(args):
         print("N must be at least 4")
         exit(1)
     return N
+
 
 if __name__ == "__main__":
     N = validate_input(sys.argv)
